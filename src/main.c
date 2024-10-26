@@ -60,6 +60,7 @@ int main(int argc, char *argv[]) {
   char *response = "HTTP/1.1 200 OK\r\n\r\n";
   send(connection_fd, response, strlen(response), 0);
 
+  close(connection_fd);
   close(server_fd);
 
   return 0;
