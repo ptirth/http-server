@@ -7,6 +7,7 @@
 #include <unistd.h>
 
 #define SERVER_PORT 8080
+#define BUFFER_SIZE 8196
 
 int main(int argc, char *argv[]) {
 
@@ -53,6 +54,10 @@ int main(int argc, char *argv[]) {
   }
 
   printf("Client connected\n");
+
+  char buffer[BUFFER_SIZE] = { 0 };
+  // Pass BUFFER_SIZE - 1 to make sure string is terminated by NULL char
+  read(connection_fd, buffer, BUFFER_SIZE - 1);
 
   char *response = "HTTP/1.1 200 OK\r\n\r\n";
   send(connection_fd, response, strlen(response), 0);
