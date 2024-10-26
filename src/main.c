@@ -1,3 +1,4 @@
+#include "parser.h"
 #include <errno.h>
 #include <netinet/in.h>
 #include <netinet/ip.h>
@@ -59,8 +60,15 @@ int main(int argc, char *argv[]) {
   // Pass BUFFER_SIZE - 1 to make sure string is terminated by NULL char
   read(connection_fd, buffer, BUFFER_SIZE - 1);
 
-  char *response = "HTTP/1.1 200 OK\r\n\r\n";
-  send(connection_fd, response, strlen(response), 0);
+  struct http_request *request = parse_http_request(buffer);
+
+  if (strcmp(request->path, "/") == 0) {
+    char *ok_200 = "HTTP/1.1 200 OK\r\n\r\n";
+    send(connection_fd, ok_200, strlen(ok_200), 0);
+  } else {
+    char *not_found_404 = "HTTP/1.1 404 Not Found\r\n\r\n";
+    send(connection_fd, not_found_404, strlen(not_found_404), 0);
+  }
 
   close(connection_fd);
   close(server_fd);
