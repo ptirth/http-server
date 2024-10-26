@@ -45,7 +45,8 @@ int main(int argc, char *argv[]) {
   struct sockaddr_in client_addr;
   socklen_t client_addr_len = sizeof(client_addr);
 
-  int connection_fd = accept(server_fd, (struct sockaddr *)&client_addr, &client_addr_len);
+  int connection_fd =
+      accept(server_fd, (struct sockaddr *)&client_addr, &client_addr_len);
   if (connection_fd == -1) {
     printf("Connection with client failed: %s \n", strerror(errno));
     return 1;
