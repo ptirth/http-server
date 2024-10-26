@@ -2,7 +2,6 @@
 #include <netinet/in.h>
 #include <netinet/ip.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <sys/socket.h>
 #include <unistd.h>
@@ -10,9 +9,6 @@
 #define SERVER_PORT 8080
 
 int main(int argc, char *argv[]) {
-  // Disable output buffering
-  setbuf(stdout, NULL);
-  setbuf(stderr, NULL);
 
   int server_fd = socket(AF_INET, SOCK_STREAM, 0);
   if (server_fd == -1) {
